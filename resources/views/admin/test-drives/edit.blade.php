@@ -40,7 +40,7 @@
 
     <div class="admin-content flex-1">
         <div class="card">
-            <div class="card-header">Edit Test Drive #{{ $testDrive->id_test_drive ?? $testDrive->id_test_drive ?? $testDrive->id }}</div>
+            <div class="card-header">Edit Test Drive #{{ $testDrive->id }}</div>
             <div class="card-body">
 
                 @if ($errors->any())
@@ -58,52 +58,52 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <label for="id_client">Client</label>
-                        <select id="id_client" name="id_client" class="form-control text-black" required>
+                        <label for="client_id">Client</label>
+                        <select id="client_id" name="client_id" class="form-control text-black" required>
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id_client }}" {{ (string)$client->id_client === (string)$testDrive->id_client ? 'selected' : '' }}>
-                                    {{ $client->nom }} {{ $client->prenom }}
+                                <option value="{{ $client->id }}" {{ (string)$client->id === (string)$testDrive->client_id ? 'selected' : '' }}>
+                                    {{ $client->name }}
                                 </option>
                             @endforeach
                         </select>                  
                     </div>
 
                     <div class="mb-4">
-                        <label for="id_voiture">Voiture</label>
-                        <select id="id_voiture" name="id_voiture" class="form-control text-black" required>
+                        <label for="car_id">Car</label>
+                        <select id="car_id" name="car_id" class="form-control text-black" required>
                             @foreach ($voitures as $voiture)
-                                <option value="{{ $voiture->id }}" {{ (string)$voiture->id === (string)$testDrive->id_voiture ? 'selected' : '' }}>
-                                    {{ $voiture->modele }}
+                                <option value="{{ $voiture->id }}" {{ (string)$voiture->id === (string)$testDrive->car_id ? 'selected' : '' }}>
+                                    {{ $voiture->model }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="mb-4">
-                        <label for="date_test">Date</label>
-                        <input type="date" id="date_test" name="date_test" class="form-control text-black" required value="{{ optional($testDrive->date_test)->format('Y-m-d') }}">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" class="form-control text-black" required value="{{ optional($testDrive->date)->format('Y-m-d') }}">
                     </div>
 
                     <div class="mb-4">
-                        <label for="heure_test">Heure</label>
-                        <input type="time" id="heure_test" name="heure_test" class="form-control text-black" required 
-                            value="{{ $testDrive->heure_test ? \Carbon\Carbon::parse($testDrive->heure_test)->format('H:i') : old('heure_test') }}">
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="time" class="form-control text-black" required 
+                            value="{{ $testDrive->time ? \Carbon\Carbon::parse($testDrive->time)->format('H:i') : old('time') }}">
                     </div>
 
                     <div class="mb-4">
-                        <label for="statut">Statut</label>
-                        <select id="statut" name="statut" class="form-control text-black" required>
-                            @foreach (['en_attente','confirme','annule','effectue'] as $statut)
-                                <option value="{{ $statut }}" {{ (string)$testDrive->statut === $statut ? 'selected' : '' }}>
-                                    {{ ucfirst($statut) }}
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="form-control text-black" required>
+                            @foreach (['pending','confirmed','cancelled','completed'] as $status)
+                                <option value="{{ $status }}" {{ (string)$testDrive->status === $status ? 'selected' : '' }}>
+                                    {{ ucfirst($status) }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="mb-4">
-                        <label for="commentaire">Commentaire</label>
-                        <textarea id="commentaire" name="commentaire" class="form-control" rows="4">{{ $testDrive->commentaire }}</textarea>
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" name="notes" class="form-control" rows="4">{{ $testDrive->notes }}</textarea>
                     </div>
 
                     <div style="display:flex; gap:10px; align-items:center;">

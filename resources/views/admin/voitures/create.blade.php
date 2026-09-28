@@ -50,33 +50,33 @@
                 @csrf
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="modele">Model *</label>
-                        <input type="text" id="modele" name="modele" value="{{ old('modele') }}" required>
+                        <label for="model">Model *</label>
+                        <input type="text" id="model" name="model" value="{{ old('model') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="annee">Year *</label>
-                        <input type="number" id="annee" name="annee" value="{{ old('annee') }}" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="prix">Price ($) *</label>
-                        <input type="number" id="prix" name="prix" step="0.01" value="{{ old('prix') }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="kilometrage">Kilometers *</label>
-                        <input type="number" id="kilometrage" name="kilometrage" value="{{ old('kilometrage') }}" required>
+                        <label for="year">Year *</label>
+                        <input type="number" id="year" name="year" value="{{ old('year') }}" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="carburant">Fuel Type *</label>
-                        <select id="carburant" name="carburant" required>
+                        <label for="price">Price ($) *</label>
+                        <input type="number" id="price" name="price" step="0.01" value="{{ old('price') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mileage">Kilometers *</label>
+                        <input type="number" id="mileage" name="mileage" value="{{ old('mileage') }}" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fuel">Fuel Type *</label>
+                        <select id="fuel" name="fuel" required>
                             <option value="">-- Select --</option>
-                            <option value="Gasoline" {{ old('carburant') === 'Gasoline' ? 'selected' : '' }}>Gasoline</option>
-                            <option value="Diesel" {{ old('carburant') === 'Diesel' ? 'selected' : '' }}>Diesel</option>
-                            <option value="Hybrid" {{ old('carburant') === 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
-                            <option value="Electric" {{ old('carburant') === 'Electric' ? 'selected' : '' }}>Electric</option>
+                            <option value="Gasoline" {{ old('fuel') === 'Gasoline' ? 'selected' : '' }}>Gasoline</option>
+                            <option value="Diesel" {{ old('fuel') === 'Diesel' ? 'selected' : '' }}>Diesel</option>
+                            <option value="Hybrid" {{ old('fuel') === 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
+                            <option value="Electric" {{ old('fuel') === 'Electric' ? 'selected' : '' }}>Electric</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -107,15 +107,15 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="couleur">Color *</label>
-                        <input type="text" id="couleur" name="couleur" value="{{ old('couleur') }}" required>
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" name="color" value="{{ old('color') }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="statut">Status *</label>
-                        <select id="statut" name="statut" required>
-                            <option value="disponible" {{ old('statut') === 'disponible' ? 'selected' : '' }}>Available</option>
-                            <option value="reserve" {{ old('statut') === 'reserve' ? 'selected' : '' }}>Reserved</option>
-                            <option value="vendu" {{ old('statut') === 'vendu' ? 'selected' : '' }}>Sold</option>
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required>
+                            <option value="available" {{ old('status') === 'available' ? 'selected' : '' }}>Available</option>
+                            <option value="reserved" {{ old('status') === 'reserved' ? 'selected' : '' }}>Reserved</option>
+                            <option value="sold" {{ old('status') === 'sold' ? 'selected' : '' }}>Sold</option>
                         </select>
                     </div>
                 </div>
@@ -124,8 +124,8 @@
                     <textarea id="description" name="description" rows="4">{{ old('description') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="image_principale">Main Image</label>
-                    <input type="file" id="image_principale" name="image_principale" accept="image/*">
+                    <label for="main_image">Main Image</label>
+                    <input type="file" id="main_image" name="main_image" accept="image/*">
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <button type="submit" class="btn-submit">Add Car</button>

@@ -60,11 +60,11 @@
                     @forelse ($testDrives as $drive)
                         <tr class="text-gray-900">
                             <td>#{{ $drive->id }}</td>
-                            <td>{{ $drive->client->nom ?? 'N/A' }}</td>
-                            <td>{{ $drive->voiture->modele ?? 'N/A' }}</td>
-                            <td>{{ $drive->date_test->format('M d, Y') }}</td>
-                            <td>{{ $drive->heure_test }}</td>
-                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($drive->statut) }}</span></td>
+                            <td>{{ $drive->client->name ?? 'N/A' }}</td>
+                            <td>{{ $drive->car->model ?? 'N/A' }}</td>
+                            <td>{{ optional($drive->date)->format('M d, Y') }}</td>
+                            <td>{{ $drive->time }}</td>
+                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($drive->status) }}</span></td>
                             <td>
                                 <a href="{{ route('admin.test-drives.edit', $drive) }}" class="btn-edit">Edit</a>
                                 <form action="{{ route('admin.test-drives.destroy', $drive) }}" method="POST" style="display: inline;">@csrf @method('DELETE')

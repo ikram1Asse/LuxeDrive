@@ -9,21 +9,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IsAdmin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check()) {
+        if (! Auth::guard('admin')->check()) {
             return redirect()->route('login.show')->with('error', 'Please login first.');
         }
 
-        if (optional(Auth::guard('admin')->user())->role !== 'admin') {
+        $user = Auth::guard('admin')->user();
+        if (! in_array($user?->role, ['admin', 'employee'], true)) {
             return redirect('/')->with('error', 'Unauthorized access.');
         }
-
 
         return $next($request);
     }

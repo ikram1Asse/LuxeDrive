@@ -9,15 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id('id_client');
-            $table->string('nom');
-            $table->string('prenom');
+            $table->id();
+            $table->string('last_name');
+            $table->string('first_name');
             $table->string('email')->unique();
-            $table->string('telephone');
-            $table->string('adresse');
-            $table->timestamp('date_inscription')->useCurrent();
+            $table->string('phone');
+            $table->string('address')->nullable();
+            $table->timestamp('registered_at')->useCurrent();
             $table->string('password');
-            $table->string('remember_token', 100)->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

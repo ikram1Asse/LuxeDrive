@@ -38,11 +38,12 @@
                 @csrf
                 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-                    <input 
-                        type="text" 
-                        name="nom" 
-                        placeholder="Enter your full name"
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                    <input
+                        type="text"
+                        name="nom"
+                        id="nom"
+                        placeholder="Enter your last name"
                         required
                         class="w-full px-4 py-3"
                         value="{{ old('nom') }}"
@@ -51,10 +52,24 @@
                 </div>
 
                 <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                    <input
+                        type="text"
+                        name="prenom"
+                        id="prenom"
+                        placeholder="Enter your first name"
+                        required
+                        class="w-full px-4 py-3"
+                        value="{{ old('prenom') }}"
+                    />
+                    @error('prenom') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
-                    <input 
-                        type="tel" 
-                        name="telephone" 
+                    <input
+                        type="tel"
+                        name="telephone"
                         placeholder="Enter your phone number"
                         required
                         class="w-full px-4 py-3"
@@ -65,9 +80,9 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                    <input 
-                        type="email" 
-                        name="email" 
+                    <input
+                        type="email"
+                        name="email"
                         placeholder="Enter your email"
                         required
                         class="w-full px-4 py-3"
@@ -78,9 +93,9 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                    <input 
-                        type="password" 
-                        name="password" 
+                    <input
+                        type="password"
+                        name="password"
                         placeholder="Enter your password"
                         required
                         class="w-full px-4 py-3"
@@ -90,9 +105,9 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        name="password_confirmation" 
+                    <input
+                        type="password"
+                        name="password_confirmation"
                         placeholder="Confirm your password"
                         required
                         class="w-full px-4 py-3"

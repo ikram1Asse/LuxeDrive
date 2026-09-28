@@ -94,27 +94,24 @@
 
                 <div class="form-row">
                     <div class="form-col">
-                        <label for="id_client">Client</label>
-                        <select id="id_client" class="text-black" name="id_client" required>
+                        <label for="client_id">Client</label>
+                        <select id="client_id" class="text-black" name="client_id" required>
                             <option value="">Select a client</option>
                             @foreach ($clients as $client)
-                                @php
-                                    $clientId = $client->id_client ?? $client->id;
-                                @endphp
-                                <option value="{{ $clientId }}" {{ (string)old('id_client', $rdv->id_client) === (string)$clientId ? 'selected' : '' }}>
-                                    {{ $client->nom ?? ($client->name ?? 'Client') }}
+                                <option value="{{ $client->id }}" {{ (string)old('client_id', $rdv->client_id) === (string)$client->id ? 'selected' : '' }}>
+                                    {{ $client->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-col">
-                        <label for="id_voiture">Car</label>
-                        <select id="id_voiture" class="text-black" name="id_voiture" required>
+                        <label for="car_id">Car</label>
+                        <select id="car_id" class="text-black" name="car_id" required>
                             <option value="">Select a car</option>
                             @foreach ($voitures as $voiture)
-                                <option value="{{ $voiture->id }}" {{ (string)old('id_voiture', $rdv->id_voiture) === (string)$voiture->id ? 'selected' : '' }}>
-                                    {{ $voiture->modele ?? $voiture->nom ?? 'Car' }}
+                                <option value="{{ $voiture->id }}" {{ (string)old('car_id', $rdv->car_id) === (string)$voiture->id ? 'selected' : '' }}>
+                                    {{ $voiture->model }}
                                 </option>
                             @endforeach
                         </select>
@@ -123,33 +120,33 @@
 
                 <div class="form-row" style="margin-top:16px;">
                     <div class="form-col">
-                        <label for="date_rdv">Date</label>
-                        <input type="date" id="date_rdv" class="text-black" name="date_rdv"
-                            value="{{ old('date_rdv', isset($rdv->date_rdv) ? $rdv->date_rdv->format('Y-m-d') : '') }}" required>
+                        <label for="date">Date</label>
+                        <input type="date" id="date" class="text-black" name="date"
+                            value="{{ old('date', optional($rdv->date)->format('Y-m-d')) }}" required>
                     </div>
 
                     <div class="form-col">
-                        <label for="heure_rdv">Hour</label>
-                        <input type="time" id="heure_rdv" class="text-black" name="heure_rdv"
-                                value="{{ $rdv->heure_rdv ? \Carbon\Carbon::parse($rdv->heure_rdv)->format('H:i') : old('heure_rdv') }}" required>
+                        <label for="time">Hour</label>
+                        <input type="time" id="time" class="text-black" name="time"
+                                value="{{ old('time', $rdv->time ? \Carbon\Carbon::parse($rdv->time)->format('H:i') : '') }}" required>
                     </div>
                 </div>
 
                 <div class="form-row" style="margin-top:16px;">
                     <div class="form-col">
-                        <label for="statut">Status</label>
-                        <select id="statut" class="text-black" name="statut" required>
-                                @foreach(['en_attente', 'confirme', 'annule', 'effectue'] as $label)
-                                    <option value="{{ $label }}" {{ old('statut', $rdv->statut) === $label ? 'selected' : '' }}>
-                                        {{ $label }}
+                        <label for="status">Status</label>
+                        <select id="status" class="text-black" name="status" required>
+                                @foreach(['pending', 'confirmed', 'cancelled', 'completed'] as $label)
+                                    <option value="{{ $label }}" {{ old('status', $rdv->status) === $label ? 'selected' : '' }}>
+                                        {{ ucfirst($label) }}
                                     </option>
                                 @endforeach
                         </select>
                     </div>
 
                     <div class="form-col">
-                        <label for="commentaire">Comment</label>
-                        <textarea id="commentaire" class="text-black" name="commentaire">{{ old('commentaire', $rdv->commentaire) }}</textarea>
+                        <label for="notes">Comment</label>
+                        <textarea id="notes" class="text-black" name="notes">{{ old('notes', $rdv->notes) }}</textarea>
                     </div>
                 </div>
 

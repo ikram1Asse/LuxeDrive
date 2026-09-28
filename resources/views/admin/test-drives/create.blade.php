@@ -59,56 +59,52 @@
 
 
                     <div class="mb-4">
-                        <label for="id_client">Client</label>
-                        <select id="id_client" name="id_client" class="form-control text-black" required>
+                        <label for="client_id">Client</label>
+                        <select id="client_id" name="client_id" class="form-control text-black" required>
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id_client }}">
-
-                                    {{ $client->nom }} {{ $client->prenom }}
+                                <option value="{{ $client->id }}">
+                                    {{ $client->name }}
                                 </option>
                             @endforeach
                         </select>                  
                     </div>
 
                     <div class="mb-4">
-                        <label for="id_voiture">Voiture</label>
-                        <select id="id_voiture" name="id_voiture" class="form-control text-black" required>
-                            <option value="" disabled {{ old('id_voiture') ? '' : 'selected' }}>Choisir une voiture</option>
+                        <label for="car_id">Car</label>
+                        <select id="car_id" name="car_id" class="form-control text-black" required>
+                            <option value="" disabled {{ old('car_id') ? '' : 'selected' }}>Choose a car</option>
                             @foreach ($voitures as $voiture)
-                                <option value="{{ $voiture->id }}" {{ old('id_voiture') == $voiture->id ? 'selected' : '' }}>
-                                    {{ $voiture->modele }} ({{ $voiture->annee }}) - ${{ number_format($voiture->prix, 2) }}
+                                <option value="{{ $voiture->id }}" {{ old('car_id') == $voiture->id ? 'selected' : '' }}>
+                                    {{ $voiture->model }} ({{ $voiture->year }}) - ${{ number_format($voiture->price, 2) }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="mb-4">
-                        <label for="date_test">Date</label>
-                        <input type="date" id="date_test" name="date_test" class="form-control text-black" required>
-
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" class="form-control text-black" required>
                     </div>
 
                     <div class="mb-4">
-                        <label for="heure_test">Heure</label>
-                        <input type="time" id="heure_test" name="heure_test" class="form-control text-black" required>
-
+                        <label for="time">Time</label>
+                        <input type="time" id="time" name="time" class="form-control text-black" required>
                     </div>
 
                     <div class="mb-4">
-                        <label for="statut">Statut</label>
-                        <select id="statut" name="statut" class="form-control text-black" required>
-                            @foreach (['en_attente','confirme','annule','effectue'] as $statut)
-                                <option value="{{ $statut }}">
-                                    {{ ucfirst($statut) }}
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="form-control text-black" required>
+                            @foreach (['pending','confirmed','cancelled','completed'] as $status)
+                                <option value="{{ $status }}">
+                                    {{ ucfirst($status) }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="mb-4">
-                        <label for="commentaire">Commentaire</label>
-                        <textarea id="commentaire" name="commentaire" class="form-control" rows="4"></textarea>
-
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" name="notes" class="form-control" rows="4"></textarea>
                     </div>
 
                     <div style="display:flex; gap:10px; align-items:center;">

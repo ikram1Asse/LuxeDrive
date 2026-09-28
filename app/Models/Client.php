@@ -2,46 +2,55 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Client extends Model
+class Client extends Authenticatable
 {
-    protected $primaryKey = 'id_client';
-    public $incrementing = true;
-    protected $keyType = 'int';
+    use HasFactory, Notifiable;
 
     protected $fillable = [
-        'nom',
-        'prenom',
+        'last_name',
+        'first_name',
         'email',
-        'telephone',
-        'adresse',
-        'date_inscription',
+        'phone',
+        'address',
+        'registered_at',
+        'password',
     ];
 
-
-    protected $casts = [
-        'date_inscription' => 'datetime',
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
-    public function demandes(): HasMany
+    protected function casts(): array
     {
-        return $this->hasMany(Demande::class, 'id_client');
+        return [
+            'registered_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
+    public function getNameAttribute(): string
+    {
+        return trim($this->first_name.' '.$this->last_name);
     }
 
     public function testDrives(): HasMany
     {
-        return $this->hasMany(TestDrive::class, 'id_client');
+        return $this->hasMany(TestDrive::class);
     }
 
-    public function reservations(): HasMany
+    public function appointments(): HasMany
     {
-        return $this->hasMany(Reserve::class, 'id_client');
+        return $this->hasMany(Appointment::class);
     }
 
-    public function ventes(): HasMany
+    public function sales(): HasMany
     {
-        return $this->hasMany(Vente::class, 'id_client');
+        return $this->hasMany(Sale::class);
     }
 }

@@ -24,6 +24,8 @@
     input { background-color: white !important; border: 1px solid #ddd !important; color: #333; padding: 10px 15px; border-radius: 4px; }
     input:focus { border-color: #701A1A !important; outline: none; box-shadow: 0 0 10px rgba(112, 26, 26, 0.2) !important; }
     input::placeholder { color: #999; }
+    .password-field { position: relative; }
+    .password-toggle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #701A1A; font-size: 14px; font-weight: 600; cursor: pointer; background: none; border: none; }
 </style>
 
 @include('components.navbar')
@@ -40,9 +42,9 @@
                 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                    <input 
-                        type="email" 
-                        name="email" 
+                    <input
+                        type="email"
+                        name="email"
                         placeholder="Enter your email"
                         required
                         class="w-full px-4 py-3"
@@ -56,18 +58,21 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="Enter your password"
-                        required
-                        class="w-full px-4 py-3"
-                    />
+                    <div class="password-field">
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                            class="w-full px-4 py-3"
+                        />
+                        <button type="button" id="password-toggle" class="password-toggle" aria-label="Show password" aria-pressed="false">Show</button>
+                    </div>
                     @error('password')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-
 
                 <p class="text-center text-sm text-gray-600">
                     Don't have an account? <a href="{{ route('signup.show') }}" class="text-red-600 font-semibold hover:underline">Sign Up</a>
@@ -84,6 +89,19 @@
         </div>
     </div>
 </section>
+
+<script>
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('password-toggle');
+
+    passwordToggle.addEventListener('click', () => {
+        const isHidden = passwordInput.type === 'password';
+        passwordInput.type = isHidden ? 'text' : 'password';
+        passwordToggle.textContent = isHidden ? 'Hide' : 'Show';
+        passwordToggle.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+        passwordToggle.setAttribute('aria-pressed', String(isHidden));
+    });
+</script>
 
 @include('components.footer')
 

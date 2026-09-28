@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Voiture;
-use App\Models\TestDrive;
+use App\Models\Car;
 use App\Models\Client;
+use App\Models\TestDrive;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $cars = Voiture::where('statut', 'Disponible')->get();
+        $cars = Car::where('status', 'available')->get();
+
         return view('home.index', compact('cars'));
     }
 
@@ -23,29 +24,29 @@ class HomeController extends Controller
             'date' => 'required|date|after:today',
         ]);
 
-        // Create or find client
-        $client = Client::where('telephone', $validated['phone'])->first();
-        
-        if (!$client) {
+        $client = Client::where('phone', $validated['phone'])->first();
+
+        if (! $client) {
             $nameParts = explode(' ', $validated['name'], 2);
             $client = Client::create([
-                'nom' => $nameParts[0] ?? $validated['name'],
-                'prenom' => $nameParts[1] ?? '',
-                'telephone' => $validated['phone'],
-                'email' => $validated['phone'] . '@luxedrive.local',
-                'adresse' => 'À compléter',
+                'first_name' => $nameParts[0] ?? $validated['name'],
+                'last_name' => $nameParts[1] ?? '',
+                'phone' => $validated['phone'],
+                'email' => $validated['phone'].'@luxedrive.local',
+                'address' => '',
+                'password' => 'client123456',
             ]);
         }
 
         TestDrive::create([
-            'id_client' => $client->id_client,
-            'id_voiture' => $request->input('id_voiture', 1),
-            'date_test' => $validated['date'],
-            'heure_test' => $request->input('heure_test', '10:00'),
-            'statut' => 'En attente',
-            'commentaire' => $request->input('commentaire'),
+            'client_id' => $client->id,
+            'car_id' => $request->input('car_id', Car::query()->value('id')),
+            'date' => $validated['date'],
+            'time' => $request->input('time', '10:00'),
+            'status' => 'pending',
+            'notes' => $request->input('notes'),
         ]);
 
-        return redirect()->route('home')->with('success', 'Votre demande de test drive a été enregistrée!');
+        return redirect('/')->with('success', 'Votre demande de test drive a été enregistrée!');
     }
 }

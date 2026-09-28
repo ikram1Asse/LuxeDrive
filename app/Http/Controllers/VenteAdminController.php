@@ -2,84 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vente;
+use App\Models\Car;
 use App\Models\Client;
-use App\Models\Voiture;
-use App\Models\Employe;
+use App\Models\Sale;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class VenteAdminController extends Controller
 {
     public function index()
     {
-        $ventes = Vente::with('client', 'voiture', 'employe')->latest()->paginate(15);
+        $ventes = Sale::with('client', 'car', 'employee')->latest()->paginate(15);
+
         return view('admin.ventes.index', compact('ventes'));
     }
 
     public function indexReadOnly()
     {
-        $ventes = Vente::with('client', 'voiture', 'employe')->latest()->paginate(15);
-        return view('admin.employee.ventes.index', compact('ventes'));
+        $ventes = Sale::with('client', 'car', 'employee')->latest()->paginate(15);
+
+        return view('employee.ventes.index', compact('ventes'));
     }
 
     public function create()
     {
         $clients = Client::all();
-        $voitures = Voiture::where('statut', 'disponible')->get();
-        $employes = Employe::all();
+        $voitures = Car::where('status', 'available')->get();
+        $employes = User::whereIn('role', ['admin', 'employee'])->get();
+
         return view('admin.ventes.create', compact('clients', 'voitures', 'employes'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'id_client' => 'required|exists:clients,id_client',
-            'id_voiture' => 'required|exists:voitures,id',
-            'id_employe' => 'required|exists:employes,id_employe',
-            'date_vente' => 'required|date',
-            'prix_final' => 'required|numeric|min:0',
-            'mode_paiement' => 'required|in:especes,carte,virement',
-            'statut' => 'required|in:en_cours,finalise,annule',
-            'commentaire' => 'nullable|string',
-        ]);
-
-        Vente::create($validated);
+        Sale::create($this->validatedData($request));
 
         return redirect()->route('admin.ventes.index')
             ->with('success', 'Sale created successfully.');
     }
 
-    public function edit(Vente $vente)
+    public function edit(Sale $vente)
     {
         $clients = Client::all();
-        $voitures = Voiture::all();
-        $employes = Employe::all();
+        $voitures = Car::all();
+        $employes = User::whereIn('role', ['admin', 'employee'])->get();
+
         return view('admin.ventes.edit', compact('vente', 'clients', 'voitures', 'employes'));
     }
 
-    public function update(Request $request, Vente $vente)
+    public function update(Request $request, Sale $vente)
     {
-        $validated = $request->validate([
-            'id_client' => 'required|exists:clients,id_client',
-            'id_voiture' => 'required|exists:voitures,id',
-            'id_employe' => 'required|exists:employes,id_employe',
-            'date_vente' => 'required|date',
-            'prix_final' => 'required|numeric|min:0',
-            'mode_paiement' => 'required|in:especes,carte,virement',
-            'statut' => 'required|in:en_cours,finalise,annule',
-            'commentaire' => 'nullable|string',
-        ]);
-
-        $vente->update($validated);
+        $vente->update($this->validatedData($request));
 
         return redirect()->route('admin.ventes.index')
             ->with('success', 'Sale updated successfully.');
     }
 
-    public function destroy(Vente $vente)
+    public function destroy(Sale $vente)
     {
         $vente->delete();
+
         return redirect()->route('admin.ventes.index')
             ->with('success', 'Sale deleted successfully.');
+    }
+
+    private function validatedData(Request $request): array
+    {
+        return $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'car_id' => 'required|exists:cars,id',
+            'user_id' => 'required|exists:users,id',
+            'sold_at' => 'required|date',
+            'final_price' => 'required|numeric|min:0',
+            'payment_method' => 'required|in:cash,card,transfer',
+            'status' => 'required|in:in_progress,completed,cancelled',
+            'notes' => 'nullable|string',
+        ]);
     }
 }

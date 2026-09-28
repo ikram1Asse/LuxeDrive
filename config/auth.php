@@ -1,31 +1,14 @@
 <?php
 
-use App\Models\ClientAuth;
-use App\Models\EmployeAuth;
+use App\Models\Client;
+use App\Models\User;
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Defaults
-    |--------------------------------------------------------------------------
-    |
-    | This option defines the default authentication "guard" and password
-    | reset "broker" for your application. You may change these values
-    | as required, but they're a perfect start for most applications.
-    |
-    */
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'client'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'clients'),
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Guards
-    |--------------------------------------------------------------------------
-    */
 
     'guards' => [
         'client' => [
@@ -34,36 +17,34 @@ return [
         ],
         'admin' => [
             'driver' => 'session',
-            'provider' => 'employes',
+            'provider' => 'users',
+        ],
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
         ],
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | User Providers
-    |--------------------------------------------------------------------------
-    */
 
     'providers' => [
         'clients' => [
             'driver' => 'eloquent',
-            'model' => ClientAuth::class,
+            'model' => Client::class,
         ],
-        'employes' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => EmployeAuth::class,
+            'model' => User::class,
         ],
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Resetting Passwords
-    |--------------------------------------------------------------------------
-    */
 
     'passwords' => [
         'clients' => [
             'provider' => 'clients',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'users' => [
+            'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,
@@ -73,4 +54,3 @@ return [
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
 ];
-

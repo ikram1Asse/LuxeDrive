@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClientAuth;
-use App\Models\EmployeAuth;
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Show login form
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // Store login
     public function storeLogin(Request $request)
     {
         $validated = $request->validate([
@@ -24,7 +21,6 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        // 1) Client login
         if (Auth::guard('client')->attempt([
             'email' => $validated['email'],
             'password' => $validated['password'],
@@ -34,18 +30,15 @@ class AuthController extends Controller
             return redirect('/')->with('success', 'Login successful!');
         }
 
-
-        // 2) Admin/Employee login
         if (Auth::guard('admin')->attempt([
             'email' => $validated['email'],
             'password' => $validated['password'],
         ], $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            $employe = Auth::guard('admin')->user();
+            $staff = Auth::guard('admin')->user();
 
-            // Admins go to admin dashboard; other employes can still access employee dashboards.
-            if ($employe && $employe->role === 'admin') {
+            if ($staff && $staff->role === 'admin') {
                 return redirect()->route('admin.dashboard')->with('success', 'Admin login successful!');
             }
 
@@ -57,29 +50,28 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    // Show signup form
     public function showSignup()
     {
         return view('auth.signup');
     }
 
-    // Store signup (clients)
     public function storeSignup(Request $request)
     {
         $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'telephone' => 'required|string|max:20',
+            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
             'email' => 'required|email|unique:clients,email|max:255',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $client = ClientAuth::create([
-            'nom' => $validated['nom'],
-            'prenom' => $request->input('prenom', ''),
+        $client = Client::create([
+            'last_name' => $validated['last_name'],
+            'first_name' => $validated['first_name'],
             'email' => $validated['email'],
-            'telephone' => $validated['telephone'],
-            'adresse' => $request->input('adresse', ''),
-            'password' => Hash::make($validated['password']),
+            'phone' => $validated['phone'],
+            'address' => $request->input('address', ''),
+            'password' => $validated['password'],
         ]);
 
         Auth::guard('client')->login($client);
@@ -87,7 +79,6 @@ class AuthController extends Controller
         return redirect('/')->with('success', 'Account created successfully!');
     }
 
-    // Logout
     public function logout(Request $request)
     {
         Auth::guard('client')->logout();
@@ -99,4 +90,3 @@ class AuthController extends Controller
         return redirect('/')->with('success', 'Logged out successfully!');
     }
 }
-

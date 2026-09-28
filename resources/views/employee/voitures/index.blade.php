@@ -45,12 +45,12 @@
                     @forelse ($voitures as $voiture)
                         <tr>
                             <td>#{{ $voiture->id }}</td>
-                            <td>{{ $voiture->modele }}</td>
-                            <td>{{ $voiture->annee }}</td>
-                            <td>${{ number_format($voiture->prix, 2) }}</td>
-                            <td>{{ $voiture->kilometrage }}</td>
-                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($voiture->statut) }}</span></td>
-                            <td>{{ $voiture->carburant }}</td>
+                            <td>{{ $voiture->model }}</td>
+                            <td>{{ $voiture->year }}</td>
+                            <td>${{ number_format($voiture->price, 2) }}</td>
+                            <td>{{ $voiture->mileage }}</td>
+                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($voiture->status) }}</span></td>
+                            <td>{{ $voiture->fuel }}</td>
                             <td>{{ $voiture->transmission }}</td>
                         </tr>
                     @empty

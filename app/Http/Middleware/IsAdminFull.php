@@ -11,14 +11,13 @@ class IsAdminFull
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check()) {
+        if (! Auth::guard('admin')->check()) {
             return redirect()->route('login.show')->with('error', 'Please login first.');
         }
 
         if (optional(Auth::guard('admin')->user())->role !== 'admin') {
-            return redirect('/')->with('error', 'Unauthorized access. Admin privileges required.');
+            return redirect()->route('employee.dashboard')->with('error', 'Admin privileges required.');
         }
-
 
         return $next($request);
     }

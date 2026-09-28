@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TestDrive extends Model
+class Appointment extends Model
 {
     protected $fillable = [
         'user_id',
         'client_id',
         'car_id',
+        'type',
         'date',
         'time',
         'status',

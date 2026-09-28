@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TestDrive extends Model
+class Sale extends Model
 {
     protected $fillable = [
-        'user_id',
         'client_id',
         'car_id',
-        'date',
-        'time',
+        'user_id',
+        'sold_at',
+        'final_price',
+        'payment_method',
         'status',
         'notes',
     ];
@@ -20,13 +21,9 @@ class TestDrive extends Model
     protected function casts(): array
     {
         return [
-            'date' => 'date',
+            'sold_at' => 'date',
+            'final_price' => 'decimal:2',
         ];
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function client(): BelongsTo
@@ -37,5 +34,15 @@ class TestDrive extends Model
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

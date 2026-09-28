@@ -8,26 +8,26 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('voitures', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->string('modele');
-            $table->year('annee');
-            $table->decimal('prix', 12, 2);
-            $table->integer('kilometrage');
-            $table->string('carburant');
+            $table->string('model');
+            $table->year('year');
+            $table->decimal('price', 12, 2);
+            $table->integer('mileage');
+            $table->string('fuel');
             $table->integer('horsepower')->nullable();
             $table->string('drivetrain')->nullable();
             $table->string('transmission');
-            $table->string('couleur');
+            $table->string('color');
             $table->text('description')->nullable();
-            $table->enum('statut', ['Disponible', 'Réservée', 'Vendue'])->default('Disponible');
-            $table->string('image_principale')->nullable();
+            $table->enum('status', ['available', 'reserved', 'sold'])->default('available');
+            $table->string('main_image')->nullable();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('voitures');
+        Schema::dropIfExists('cars');
     }
 };

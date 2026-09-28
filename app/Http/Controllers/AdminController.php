@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Employe;
-use App\Models\Voiture;
+use App\Models\Appointment;
+use App\Models\Car;
+use App\Models\Sale;
 use App\Models\TestDrive;
-use App\Models\Reserve;
-use App\Models\RendezVousAchat;
-use App\Models\Vente;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        $totalUsers = User::where('role', 'user')->count();
+        $totalUsers = User::where('role', 'employee')->count();
         $totalAdmins = User::where('role', 'admin')->count();
-        $users = User::where('role', 'user')->latest()->paginate(10);
+        $users = User::where('role', 'employee')->latest()->paginate(10);
 
         return view('admin.dashboard', compact('totalUsers', 'totalAdmins', 'users'));
     }
@@ -25,17 +22,17 @@ class AdminController extends Controller
     public function management()
     {
         $statistics = [
-            'employees' => Employe::count(),
-            'cars' => Voiture::count(),
-            'available_cars' => Voiture::where('statut', 'available')->count(),
+            'employees' => User::where('role', 'employee')->count(),
+            'cars' => Car::count(),
+            'available_cars' => Car::where('status', 'available')->count(),
             'test_drives' => TestDrive::count(),
-            'pending_test_drives' => TestDrive::where('statut', 'scheduled')->count(),
-            'reserves' => Reserve::count(),
-            'pending_reserves' => Reserve::where('statut', 'pending')->count(),
-            'rdv' => RendezVousAchat::count(),
-            'pending_rdv' => RendezVousAchat::where('statut', 'pending')->count(),
-            'ventes' => Vente::count(),
-            'completed_ventes' => Vente::where('statut', 'completed')->count(),
+            'pending_test_drives' => TestDrive::where('status', 'pending')->count(),
+            'reserves' => Appointment::where('type', 'general')->count(),
+            'pending_reserves' => Appointment::where('type', 'general')->where('status', 'pending')->count(),
+            'rdv' => Appointment::where('type', 'purchase')->count(),
+            'pending_rdv' => Appointment::where('type', 'purchase')->where('status', 'pending')->count(),
+            'ventes' => Sale::count(),
+            'completed_ventes' => Sale::where('status', 'completed')->count(),
         ];
 
         return view('admin.management', compact('statistics'));
@@ -44,18 +41,18 @@ class AdminController extends Controller
     public function employeeDashboard()
     {
         $statistics = [
-            'employees' => Employe::count(),
-            'cars' => Voiture::count(),
-            'available_cars' => Voiture::where('statut', 'available')->count(),
+            'employees' => User::where('role', 'employee')->count(),
+            'cars' => Car::count(),
+            'available_cars' => Car::where('status', 'available')->count(),
             'test_drives' => TestDrive::count(),
-            'pending_test_drives' => TestDrive::where('statut', 'scheduled')->count(),
-            'reserves' => Reserve::count(),
-            'pending_reserves' => Reserve::where('statut', 'pending')->count(),
-            'rdv' => RendezVousAchat::count(),
-            'pending_rdv' => RendezVousAchat::where('statut', 'pending')->count(),
-            'ventes' => Vente::count(),
+            'pending_test_drives' => TestDrive::where('status', 'pending')->count(),
+            'reserves' => Appointment::where('type', 'general')->count(),
+            'pending_reserves' => Appointment::where('type', 'general')->where('status', 'pending')->count(),
+            'rdv' => Appointment::where('type', 'purchase')->count(),
+            'pending_rdv' => Appointment::where('type', 'purchase')->where('status', 'pending')->count(),
+            'ventes' => Sale::count(),
         ];
 
-        return view('admin.employee-dashboard', compact('statistics'));
+        return view('employee.employee-dashboard', compact('statistics'));
     }
 }

@@ -90,24 +90,24 @@
 
                 <div class="form-row">
                     <div class="form-col">
-                        <label for="id_client">Client</label>
-                        <select id="id_client"class="text-black" name="id_client" required>
+                        <label for="client_id">Client</label>
+                        <select id="client_id"class="text-black" name="client_id" required>
                             <option value="">Select a client</option>
                             @foreach ($clients as $client)
-                                <option value="{{ $client->id_client ?? $client->id }}" {{ old('id_client') == ($client->id_client ?? $client->id) ? 'selected' : '' }}>
-                                    {{ $client->nom ?? ($client->name ?? 'Client') }}
+                                <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
+                                    {{ $client->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-col">
-                        <label for="id_voiture">Car</label>
-                        <select id="id_voiture" class="text-black" name="id_voiture" required>
+                        <label for="car_id">Car</label>
+                        <select id="car_id" class="text-black" name="car_id" required>
                             <option value="">Select a car</option>
                             @foreach ($voitures as $voiture)
-                                <option value="{{ $voiture->id }}" {{ old('id_voiture') == $voiture->id ? 'selected' : '' }}>
-                                    {{ $voiture->modele ?? $voiture->nom ?? 'Car' }}
+                                <option value="{{ $voiture->id }}" {{ old('car_id') == $voiture->id ? 'selected' : '' }}>
+                                    {{ $voiture->model }}
                                 </option>
                             @endforeach
                         </select>
@@ -116,32 +116,32 @@
 
                 <div class="form-row" style="margin-top:16px;">
                     <div class="form-col">
-                        <label for="date_rdv">Date</label>
-                        <input type="date" id="date_rdv" class="text-black" name="date_rdv" value="{{ old('date_rdv') }}" required>
+                        <label for="date">Date</label>
+                        <input type="date" id="date" class="text-black" name="date" value="{{ old('date') }}" required>
                     </div>
 
                     <div class="form-col">
-                        <label for="heure_rdv">Hour</label>
-                        <input type="time" id="heure_rdv" class="text-black" name="heure_rdv" 
-                        value="{{ old('heure_rdv') }}" required>
+                        <label for="time">Hour</label>
+                        <input type="time" id="time" class="text-black" name="time" 
+                        value="{{ old('time') }}" required>
                     </div>
                 </div>
 
                 <div class="form-row" style="margin-top:16px;">
                     <div class="form-col">
-                        <label for="statut">Status</label>
-                        <select id="statut" class="text-black" name="statut" required>
-                                @foreach(['en_attente', 'confirme', 'annule', 'effectue'] as $label)
-                                    <option value="{{ $label }}" {{ old('statut') === $label ? 'selected' : '' }}>
-                                        {{ ucfirst(str_replace('_', ' ', $label)) }}
+                        <label for="status">Status</label>
+                        <select id="status" class="text-black" name="status" required>
+                                @foreach(['pending', 'confirmed', 'cancelled', 'completed'] as $label)
+                                    <option value="{{ $label }}" {{ old('status') === $label ? 'selected' : '' }}>
+                                        {{ ucfirst($label) }}
                                     </option>
                                 @endforeach
                         </select>
                     </div>
 
                     <div class="form-col">
-                        <label for="commentaire">Comment</label>
-                        <textarea id="commentaire" class="text-black" name="commentaire">{{ old('commentaire') }}</textarea>
+                        <label for="notes">Comment</label>
+                        <textarea id="notes" class="text-black" name="notes">{{ old('notes') }}</textarea>
                     </div>
                 </div>
 

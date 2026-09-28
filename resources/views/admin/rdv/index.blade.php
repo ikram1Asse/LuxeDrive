@@ -60,11 +60,11 @@
                     @forelse ($rdvs as $rdv)
                         <tr class="text-gray-900">
                             <td>#{{ $rdv->id }}</td>
-                            <td>{{ $rdv->client->nom ?? 'N/A' }}</td>
-                            <td>{{ $rdv->voiture->modele ?? 'N/A' }}</td>
-                            <td>{{ $rdv->date_rdv->format('M d, Y') }}</td>
-                            <td>{{ $rdv->heure_rdv }}</td>
-                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($rdv->statut) }}</span></td>
+                            <td>{{ $rdv->client->name ?? 'N/A' }}</td>
+                            <td>{{ $rdv->car->model ?? 'N/A' }}</td>
+                            <td>{{ optional($rdv->date)->format('M d, Y') }}</td>
+                            <td>{{ $rdv->time }}</td>
+                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($rdv->status) }}</span></td>
                             <td>
                                 <a href="{{ route('admin.rdv.edit', $rdv) }}" class="btn-edit">Edit</a>
                                 <form action="{{ route('admin.rdv.destroy', $rdv) }}" method="POST" style="display: inline;">@csrf @method('DELETE')

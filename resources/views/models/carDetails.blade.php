@@ -88,30 +88,39 @@
             <div class="space-y-3 mb-6  flex-grow">
 
                 <div class="flex justify-between">
-                    <span class="text-white font-semibold">Engine</span>
+                    <span class="text-lg font-bold" >Engine</span>
                     <span class="text-white">{{ $carburant ?: 'N/A' }}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-white font-semibold">Horsepower</span>
+                    <span class="text-lg font-bold">Horsepower</span>
                     <span class="text-white">{{ $horsepower ? $horsepower . ' hp' : 'N/A' }}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-white font-semibold">Drivetrain</span>
+                    <span class="text-lg font-bold">Drivetrain</span>
                     <span class="text-white">{{ $drivetrain ?: 'N/A' }}</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-white font-semibold">Transmission</span>
+                    <span class="text-lg font-bold">Transmission</span>
                     <span class="text-white">{{ $transmission ?: 'N/A' }}</span>
                 </div>
+                <div class="flex justify-between">
+                    <span class="text-lg font-bold">Year</span>
+                    <span class="text-white">{{ $annee ?: 'N/A' }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-lg font-bold">Mileage</span>
+                    <span class="text-white">{{ $kilometrage !== null ? number_format($kilometrage) : 'N/A' }}km</span>
+                </div>
+                <!-- <p class="text-lg text-gray-500">
+                        {{ $annee }} • {{ $kilometrage !== null ? number_format($kilometrage) : 'N/A' }}km
+                    </p> -->
 
             </div>
 
-            <!-- Price & Year -->
+            <!-- Price  -->
                 <div class="mb-4 pb-4 border-t">
-                    <p class="text-lg font-bold text-red-600 mt-4">{{ $prix !== null ? '$' . number_format($prix, 0) : 'N/A' }}</p>
-                    <p class="text-xs text-gray-500">
-                        {{ $annee }} • {{ $kilometrage !== null ? number_format($kilometrage) : 'N/A' }}km
-                    </p>
+                    <p class="text-xl font-bold text-red-600 mt-4">{{ $prix !== null ? '$' . number_format($prix, 0) : 'N/A' }}</p>
+                    
                 </div>
 
 

@@ -52,32 +52,32 @@
                 @method('PUT')
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="modele">Model *</label>
-                        <input type="text" id="modele" class="text-black" name="modele" value="{{ old('modele', $voiture->modele) }}" required>
+                        <label for="model">Model *</label>
+                        <input type="text" id="model" class="text-black" name="model" value="{{ old('model', $voiture->model) }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="annee">Year *</label>
-                        <input type="number" id="annee" class="text-black" name="annee" value="{{ old('annee', $voiture->annee) }}" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="prix">Price ($) *</label>
-                        <input type="number" id="prix" name="prix" class="text-black" step="0.01" value="{{ old('prix', $voiture->prix) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="kilometrage">Kilometers *</label>
-                        <input type="number" id="kilometrage"  class="text-black" name="kilometrage" value="{{ old('kilometrage', $voiture->kilometrage) }}" required>
+                        <label for="year">Year *</label>
+                        <input type="number" id="year" class="text-black" name="year" value="{{ old('year', $voiture->year) }}" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="carburant">Fuel Type *</label>
-                        <select id="carburant" class="text-black" name="carburant" required>
-                            <option value="Gasoline" {{ old('carburant', $voiture->carburant) === 'Gasoline' ? 'selected' : '' }}>Gasoline</option>
-                            <option value="Diesel" {{ old('carburant', $voiture->carburant) === 'Diesel' ? 'selected' : '' }}>Diesel</option>
-                            <option value="Hybrid" {{ old('carburant', $voiture->carburant) === 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
-                            <option value="Electric" {{ old('carburant', $voiture->carburant) === 'Electric' ? 'selected' : '' }}>Electric</option>
+                        <label for="price">Price ($) *</label>
+                        <input type="number" id="price" name="price" class="text-black" step="0.01" value="{{ old('price', $voiture->price) }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mileage">Kilometers *</label>
+                        <input type="number" id="mileage"  class="text-black" name="mileage" value="{{ old('mileage', $voiture->mileage) }}" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fuel">Fuel Type *</label>
+                        <select id="fuel" class="text-black" name="fuel" required>
+                            <option value="Gasoline" {{ old('fuel', $voiture->fuel) === 'Gasoline' ? 'selected' : '' }}>Gasoline</option>
+                            <option value="Diesel" {{ old('fuel', $voiture->fuel) === 'Diesel' ? 'selected' : '' }}>Diesel</option>
+                            <option value="Hybrid" {{ old('fuel', $voiture->fuel) === 'Hybrid' ? 'selected' : '' }}>Hybrid</option>
+                            <option value="Electric" {{ old('fuel', $voiture->fuel) === 'Electric' ? 'selected' : '' }}>Electric</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -106,15 +106,15 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="couleur">Color *</label>
-                        <input type="text" id="couleur" class="text-black" name="couleur" value="{{ old('couleur', $voiture->couleur) }}" required>
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" class="text-black" name="color" value="{{ old('color', $voiture->color) }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="statut">Status *</label>
-                        <select id="statut" class="text-black" name="statut" required>
-                            <option value="disponible" {{ old('statut', $voiture->statut) === 'disponible' ? 'selected' : '' }}>Available</option>
-                            <option value="reserve" {{ old('statut', $voiture->statut) === 'reserve' ? 'selected' : '' }}>Reserved</option>
-                            <option value="vendu" {{ old('statut', $voiture->statut) === 'vendu' ? 'selected' : '' }}>Sold</option>
+                        <label for="status">Status *</label>
+                        <select id="status" class="text-black" name="status" required>
+                            <option value="available" {{ old('status', $voiture->status) === 'available' ? 'selected' : '' }}>Available</option>
+                            <option value="reserved" {{ old('status', $voiture->status) === 'reserved' ? 'selected' : '' }}>Reserved</option>
+                            <option value="sold" {{ old('status', $voiture->status) === 'sold' ? 'selected' : '' }}>Sold</option>
                         </select>
                     </div>
                 </div>
@@ -123,11 +123,11 @@
                     <textarea id="description" class="text-black" name="description" rows="4">{{ old('description', $voiture->description) }}</textarea>
                 </div>
                 <div class="form-group text-black">
-                    <label for="image_principale">Main Image</label>
-                    @if($voiture->image_principale)
-                        <p>Current: <img src="{{ Storage::url($voiture->image_principale) }}" alt="Car Image" class="img-preview"></p>
+                    <label for="main_image">Main Image</label>
+                    @if($voiture->main_image)
+                        <p>Current: <img src="{{ Storage::url($voiture->main_image) }}" alt="Car Image" class="img-preview"></p>
                     @endif
-                    <input type="file" id="image_principale" class="text-black" name="image_principale" accept="image/*">
+                    <input type="file" id="main_image" class="text-black" name="main_image" accept="image/*">
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <button type="submit" class="btn-submit">Update Car</button>

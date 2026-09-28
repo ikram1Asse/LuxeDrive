@@ -61,11 +61,11 @@
                     @forelse ($voitures as $voiture)
                         <tr>
                             <td>#{{ $voiture->id }}</td>
-                            <td>{{ $voiture->modele }}</td>
-                            <td>{{ $voiture->annee }}</td>
-                            <td>${{ number_format($voiture->prix, 2) }}</td>
-                            <td>{{ $voiture->kilometrage }} KM</td>
-                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($voiture->statut) }}</span></td>
+                            <td>{{ $voiture->model }}</td>
+                            <td>{{ $voiture->year }}</td>
+                            <td>${{ number_format($voiture->price, 2) }}</td>
+                            <td>{{ $voiture->mileage }} KM</td>
+                            <td><span style="padding: 5px 10px; background-color: #e9ecef; border-radius: 3px; font-size: 12px;">{{ ucfirst($voiture->status) }}</span></td>
                             <td>
                                 <a href="{{ route('admin.voitures.edit', $voiture) }}" class="btn-edit">Edit</a>
                                 <form action="{{ route('admin.voitures.destroy', $voiture) }}" method="POST" style="display: inline;">@csrf @method('DELETE')
